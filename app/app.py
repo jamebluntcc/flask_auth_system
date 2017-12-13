@@ -5,7 +5,6 @@ from auth.adminView import authModelView, myAdminIndexView
 from . import auth, main
 from settings import DevConfig
 from flask_admin import Admin
-from flask_admin import AdminIndexView
 
 
 def create_app(config=DevConfig):
