@@ -1,8 +1,7 @@
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import Blueprint, flash, redirect, render_template, url_for
 from .forms import RegisterForm
 from flask_login import login_required, logout_user
 from .models import User
-from app.exetensions import db
 from app.utils import flash_errors
 
 
@@ -19,14 +18,13 @@ def logout():
 
 @blueprint.route('/register/', methods=['GET', 'POST'])
 def register():
-    form = RegisterForm(request.form)
+    form = RegisterForm()
     if form.validate_on_submit():
         user = User(username=form.username.data,
                     email=form.email.data,
                     password=form.password.data,
                     active=True)
-        db.session.add(user)
-        db.session.commit()
+        user.save()
         flash('Thank you for register. You can now loggin.', 'success')
         return redirect(url_for('main.home'))
     else:

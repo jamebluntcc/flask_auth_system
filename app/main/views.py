@@ -16,7 +16,7 @@ def load_user(user_id):
 @blueprint.route('/home/', methods=['GET', 'POST'])
 @blueprint.route('/', methods=['GET', 'POST'])
 def home():
-    form = LoginForm(request.form)
+    form = LoginForm()
     if request.method == 'POST':
         if form.validate_on_submit():
             login_user(form.user)

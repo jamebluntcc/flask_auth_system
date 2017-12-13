@@ -26,6 +26,9 @@
         <li>
             <p class="navbar-text"><a class="navbar-link" href="{{ url_for('main.members') }}">Logged in as {{ current_user.username }}</a></p>
         </li>
+      {% if current_user.is_admin %}
+         <li><a class="navbar-link" href="/admin">Admin</a></li>
+      {% endif %}
         <li><a class="navbar-link" href="{{ url_for('auth.logout') }}"><i class="fa fa-sign-out"></i>logout</a></li>
     </ul>
     {% elif form %}
