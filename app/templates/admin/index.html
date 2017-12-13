@@ -1,0 +1,29 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+{{ super() }}
+<div class="jumbotron">
+    <h1>Auth Admin</h1>
+        {% if current_user.is_authenticated and current_user.is_admin %}
+        <p class="lead">
+            Admin
+        </p>
+        <p>
+            welcome, {{ current_user.username }}.
+        </p>
+        <a class="btn btn-primary" href="{{ url_for('main.members') }}"><i class="icon-arrow-left icon-white"></i> Back</a>
+        {% elif current_user.is_authenticated %}
+        <p class="lead">
+            User
+        </p>
+        <p>
+            welcome, {{ current_user.username }}. this is administrator manager authentication, you seem not a admin.
+        </p>
+        <a class="btn btn-primary" href="{{ url_for('main.members') }}"><i class="icon-arrow-left icon-white"></i> Back</a>
+        {% else %}
+        <p class="lead">
+            this page only administrator can visit, <a href="{{ url_for('main.home') }}">authentication</a> first.
+        </p>
+        <a class="btn btn-primary" href="{{ url_for('main.home') }}"><i class="icon-arrow-left icon-white"></i> Back</a>
+        {% endif %}
+</div>
+{% endblock %}
