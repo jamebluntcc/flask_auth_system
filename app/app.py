@@ -1,7 +1,11 @@
 from flask import Flask, render_template
 from .exetensions import db, bcrypt, login_manager, migrate
+from auth.models import User
+from auth.adminView import authModelView, myAdminIndexView
 from . import auth, main
 from settings import DevConfig
+from flask_admin import Admin
+from flask_admin import AdminIndexView
 
 
 def create_app(config=DevConfig):
@@ -10,6 +14,7 @@ def create_app(config=DevConfig):
     register_blueprint(app)
     register_exetensions(app)
     register_errorhandlers(app)
+    register_admin(app)
     return app
 
 
@@ -36,3 +41,7 @@ def register_errorhandlers(app):
         app.errorhandler(errcode)(render_error)
     return None
 
+
+def register_admin(app):
+    admin = Admin(app, index_view=myAdminIndexView(), base_template='admin/nav.html')
+    admin.add_view(authModelView(User, db.session))
