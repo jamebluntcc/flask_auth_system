@@ -16,15 +16,15 @@ def before_request():
             and request.endpoint \
             and request.endpoint[:5] != 'auth.' \
             and request.endpoint != 'static':
-        mail_addr = Config.MAIL_MAP.get(current_user.email.split('@')[1], '')
-        return redirect(url_for('auth.unconfirmed', email=mail_addr))
+        return redirect(url_for('auth.unconfirmed'))
 
 
-@blueprint.route('/unconfirmed<email>')
-def unconfirmed(email):
+@blueprint.route('/unconfirmed/')
+def unconfirmed():
     if current_user.is_anonymous or current_user.active:
         return redirect(url_for('main.index'))
-    return render_template('auth/unconfirmed.html', mail=email)
+    mail_addr = Config.MAIL_MAP.get(current_user.email.split('@')[1], '')
+    return render_template('auth/unconfirmed.html', mail=mail_addr)
 
 
 @blueprint.route('/logout/')
