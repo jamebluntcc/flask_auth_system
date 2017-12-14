@@ -10,7 +10,7 @@
         <p>
             welcome, {{ current_user.username }}.
         </p>
-        <a class="btn btn-primary" href="{{ url_for('main.members') }}"><i class="icon-arrow-left icon-white"></i> Back</a>
+        <a class="btn btn-primary" href="{{ url_for('users.members') }}"><i class="icon-arrow-left icon-white"></i> Back</a>
         {% elif current_user.is_authenticated %}
         <p class="lead">
             User
@@ -18,7 +18,7 @@
         <p>
             welcome, {{ current_user.username }}. this is administrator manager authentication, you seem not a admin.
         </p>
-        <a class="btn btn-primary" href="{{ url_for('main.members') }}"><i class="icon-arrow-left icon-white"></i> Back</a>
+        <a class="btn btn-primary" href="{{ url_for('users.members') }}"><i class="icon-arrow-left icon-white"></i> Back</a>
         {% else %}
         <p class="lead">
             this page only administrator can visit, <a href="{{ url_for('main.home') }}">authentication</a> first.

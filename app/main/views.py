@@ -21,14 +21,8 @@ def home():
         if form.validate_on_submit():
             login_user(form.user)
             flash('You are logged in.', 'success')
-            redirect_url = request.args.get('next') or url_for('main.members')
+            redirect_url = request.args.get('next') or url_for('users.members')
             return redirect(redirect_url)
         else:
             flash_errors(form)
     return render_template('home.html', form=form)
-
-
-@blueprint.route('/user/')
-@login_required
-def members():
-    return render_template('user/members.html')

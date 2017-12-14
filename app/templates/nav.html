@@ -24,7 +24,10 @@
     {% if current_user and current_user.is_authenticated %}
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <p class="navbar-text"><a class="navbar-link" href="{{ url_for('main.members') }}">Logged in as {{ current_user.username }}</a></p>
+            <p class="navbar-text"><a class="navbar-link" href="{{ url_for('users.members') }}">Logged in as {{ current_user.username }}</a></p>
+        </li>
+        <li>
+          <p class="navbar-text"><a class="navbar-link" href="{{ url_for('users.change_info') }}">Change your information</a></p>
         </li>
       {% if current_user.is_admin %}
          <li><a class="navbar-link" href="/admin">Admin</a></li>

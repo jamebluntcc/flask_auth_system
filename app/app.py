@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from .exetensions import db, bcrypt, login_manager, migrate, mail
 from auth.models import User
 from auth.adminView import authModelView, myAdminIndexView
-from . import auth, main
+from . import auth, main, user
 from settings import DevConfig
 from flask_admin import Admin
 
@@ -29,6 +29,7 @@ def register_exetensions(app):
 def register_blueprint(app):
     app.register_blueprint(auth.views.blueprint)
     app.register_blueprint(main.views.blueprint)
+    app.register_blueprint(user.views.blueprint)
     return None
 
 
