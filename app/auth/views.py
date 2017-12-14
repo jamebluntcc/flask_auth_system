@@ -4,7 +4,7 @@ from flask_login import login_required, logout_user, current_user, login_user
 from .models import User
 from app.utils import flash_errors
 from app.mail import send_mail
-
+from settings import Config
 
 blueprint = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -16,14 +16,15 @@ def before_request():
             and request.endpoint \
             and request.endpoint[:5] != 'auth.' \
             and request.endpoint != 'static':
-        return redirect(url_for('auth.unconfirmed'))
+        mail_addr = Config.MAIL_MAP.get(current_user.email.split('@')[1], '')
+        return redirect(url_for('auth.unconfirmed', email=mail_addr))
 
 
-@blueprint.route('/unconfirmed')
-def unconfirmed():
+@blueprint.route('/unconfirmed<email>')
+def unconfirmed(email):
     if current_user.is_anonymous or current_user.active:
         return redirect(url_for('main.index'))
-    return render_template('auth/unconfirmed.html')
+    return render_template('auth/unconfirmed.html', mail=email)
 
 
 @blueprint.route('/logout/')
@@ -58,7 +59,8 @@ def register():
         token = user.generate_confirmation_token()
         send_mail(user.email, 'Confirm Your Account',
                   'auth/confirm', user=user, token=token)
-        flash('Thank you for register. A confirmation email has been sent to you by email. note: open verify email better on your pc browser', 'success')
+        flash('Thank you for register. A confirmation email has been sent to you by email. \
+        note: open verify email better on your pc browser', 'success')
         login_user(user)
         return redirect(url_for('main.home'))
     else:

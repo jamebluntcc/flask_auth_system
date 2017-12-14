@@ -13,6 +13,10 @@ class Config(object):
     MAIL_PASSWORD = os.environ['MAIL_PASSWD']
     MAIL_SUBJECT_PREFIX = '[JAMEBLUNTCC]'
     MAIL_SENDER = 'Chencheng flask admin <{0}>'.format(MAIL_USERNAME)
+    MAIL_MAP = {
+        '163.com': 'https://mail.163.com',
+        'qq.com': 'https://mail.qq.com'
+    }
 
 
 class DevConfig(Config):
