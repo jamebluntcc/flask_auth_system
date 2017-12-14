@@ -1,4 +1,6 @@
 from app.exetensions import bcrypt, db
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from flask import current_app
 from flask_login import UserMixin
 import datetime
 
@@ -22,6 +24,21 @@ class User(UserMixin, db.Model):
             self.set_password(password)
         else:
             self.password = None
+
+    def generate_confirmation_token(self, expiration=3600):
+        s = Serializer(current_app.config['SECRET_KEY'], expiration)
+        return s.dumps({'confirm': self.id})
+
+    def confirm(self, token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except:
+            return False
+        if data.get('confirm') != self.id:
+            return True
+        self.update(active=True)
+        return True
 
     def save(self, commit=True):
         db.session.add(self)

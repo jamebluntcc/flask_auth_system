@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from .exetensions import db, bcrypt, login_manager, migrate
+from .exetensions import db, bcrypt, login_manager, migrate, mail
 from auth.models import User
 from auth.adminView import authModelView, myAdminIndexView
 from . import auth, main
@@ -22,6 +22,7 @@ def register_exetensions(app):
     bcrypt.init_app(app)
     login_manager.init_app(app)
     migrate.init_app(app, db)
+    mail.init_app(app)
     return None
 
 
