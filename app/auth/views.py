@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, redirect, render_template, url_for
+from flask import Blueprint, flash, redirect, render_template, url_for, request
 from .forms import RegisterForm
 from flask_login import login_required, logout_user, current_user
 from .models import User
@@ -7,6 +7,23 @@ from app.mail import send_mail
 
 
 blueprint = Blueprint('auth', __name__, url_prefix='/auth')
+
+
+@blueprint.before_app_request
+def before_request():
+    if current_user.is_authenticated \
+            and not current_user.confirmed \
+            and request.endpoint \
+            and request.endpoint[:5] != 'auth.' \
+            and request.endpoint != 'static':
+        return redirect(url_for('auth.unconfirmed'))
+
+
+@blueprint.route('/unconfirmed')
+def unconfirmed():
+    if current_user.is_anonymous or current_user.confirmed:
+        return redirect(url_for('main.index'))
+    return render_template('auth/unconfirmed.html')
 
 
 @blueprint.route('/logout/')
@@ -46,3 +63,13 @@ def register():
     else:
         flash_errors(form)
     return render_template('auth/register.html', form=form)
+
+
+@blueprint.route('/confirm')
+@login_required
+def resend_confirmation():
+    token = current_user.generate_confirmation_token()
+    send_mail(current_user.email, 'Confirm Your Account',
+              'auth/confirm', user=current_user, token=token)
+    flash('A new confirmation email has been sent to you by email.')
+    return redirect(url_for('main.home'))
