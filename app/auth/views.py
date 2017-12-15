@@ -39,6 +39,7 @@ def logout():
 @login_required
 def confirm(token):
     if current_user.active:
+        flash('you have update your email infomation.', 'success')
         return redirect(url_for('main.home'))
     if current_user.confirm(token):
         flash('you have confirmed your account. Thanks!', 'success')
