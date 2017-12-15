@@ -10,6 +10,7 @@ this flask project inspired by [cookiecutter-flask](https://github.com/sloria/co
  - Flask-Login for authentication
  - Flask-Bcrypt for password hashing
  - Flask-Admin for manager user auth
+ - Flask-mail for email verify
  - Utilizes best practices: Blueprints and Application Factory patterns
 
 # change log
@@ -17,4 +18,7 @@ this flask project inspired by [cookiecutter-flask](https://github.com/sloria/co
     - base on cookiecutter-flask init repository.
  - beta 0.1.1 (13/12/2017)
     - add flask admin on auth system.
+ - beta 0.1.2 (15/12/2017)
+    - add flask mail on auth system to verify user email and update user info page.
+
 
