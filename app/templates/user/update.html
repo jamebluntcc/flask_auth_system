@@ -1,30 +1,41 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="container-narrow">
-  <h1>Change Infomation</h1>
+    <div class="row">
+        <div class="col-md-6">
+        <h1>Change Infomation</h1>
     <br/>
-    <form id="ChangeinfoForm" class="form form-register" method="POST" action="" role="form">
-        {{ form.hidden_tag() }}
+    <form id="ChangeinfoForm" class="form form-register" method="POST" action="{{ url_for('users.change_info') }}" role="form">
+        {{ info_form.hidden_tag() }}
             <div class="form-group">
-                {{form.username.label}}
-                {{form.username(value=current_user.username, class_="form-control")}}
+                {{info_form.username.label}}
+                {{info_form.username(value=current_user.username, class_="form-control")}}
             </div>
             <div class="form-group">
-                {{form.email.label}}
-                {{form.email(value=current_user.email, class_="form-control")}}
+                {{info_form.email.label}}
+                {{info_form.email(value=current_user.email, class_="form-control")}}
+            </div>
+        <p><input class="btn btn-default btn-submit" type="submit" value="submit"></p>
+    </form>
+        </div>
+        <div class="col-md-6">
+              <h1>Change Password</h1>
+        <br/>
+        <form id="EditPasswordForm" class="form form-register" method="POST" action="{{ url_for('users.change_passwd') }}" role="form">
+        {{ passwd_form.hidden_tag() }}
+            <div class="form-group">
+                {{passwd_form.old_password.label}}
+                {{passwd_form.old_password(placeholder="Old Password", class_="form-control")}}
             </div>
             <div class="form-group">
-                {{form.old_password.label}}
-                {{form.old_password(placeholder="Old Password", class_="form-control")}}
+                {{passwd_form.new_password.label}}
+                {{passwd_form.new_password(placeholder="New Password", class_="form-control")}}
             </div>
             <div class="form-group">
-                {{form.new_password.label}}
-                {{form.new_password(placeholder="New Password", class_="form-control")}}
-            </div>
-            <div class="form-group">
-                {{form.confirm.label}}
-                {{form.confirm(placeholder="New Password (again)", class_="form-control")}}
+                {{passwd_form.confirm.label}}
+                {{passwd_form.confirm(placeholder="New Password (again)", class_="form-control")}}
             </div>
             <p><input class="btn btn-default btn-submit" type="submit" value="submit"></p>
     </form>
+        </div>
+    </div>
 {% endblock %}

@@ -10,13 +10,6 @@ class ChangeinfoForm(FlaskForm):
                            validators=[DataRequired(), Length(min=3, max=30)])
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
-    old_password = PasswordField('Old Password',
-                                 validators=[DataRequired()])
-    new_password = PasswordField('New Password',
-                                 validators=[DataRequired()])
-    confirm = PasswordField('Verify Password',
-                            validators=[DataRequired(), EqualTo('new_password',
-                                                                message='password must match')])
 
     def __init__(self, *args, **kwargs):
         super(ChangeinfoForm, self).__init__(*args, **kwargs)
@@ -36,9 +29,29 @@ class ChangeinfoForm(FlaskForm):
             if self.user:
                 self.email.errors.append('Email already registered')
                 return False
+        return True
+
+
+class EditPasswordForm(FlaskForm):
+    old_password = PasswordField('Old Password',
+                                 validators=[DataRequired()])
+    new_password = PasswordField('New Password',
+                                 validators=[DataRequired()])
+    confirm = PasswordField('Verify Password',
+                            validators=[DataRequired(), EqualTo('new_password',
+                                                                message='password must match')])
+
+    def __init__(self, *args, **kwargs):
+        super(EditPasswordForm, self).__init__(*args, **kwargs)
+        self.user = None
+
+    def validate(self):
+        initial_validation = super(EditPasswordForm, self).validate()
+        if not initial_validation:
+            return False
+
         if not current_user.check_password(self.old_password.data):
             self.old_password.errors.append('password error')
             return False
-        return True
 
 
