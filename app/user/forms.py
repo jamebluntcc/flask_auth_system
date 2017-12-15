@@ -53,5 +53,11 @@ class EditPasswordForm(FlaskForm):
         if not current_user.check_password(self.old_password.data):
             self.old_password.errors.append('password error')
             return False
+        
+        if current_user.check_password(self.new_password.data):
+            self.new_password.errors.append('new password can not equal old one')
+            return False
+
+        return True
 
 

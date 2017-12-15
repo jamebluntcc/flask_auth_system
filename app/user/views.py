@@ -26,7 +26,8 @@ def change_passwd():
     passwd_form = EditPasswordForm()
     info_form = ChangeinfoForm()
     if passwd_form.validate_on_submit():
-        current_user.update(passeword=passwd_form.new_password.data)
+        current_user.set_password(passwd_form.new_password.data)
+        current_user.save()
         flash('hi {}, Already update your password.'.format(current_user.username), 'success')
         return redirect(url_for('users.members'))
     else:
