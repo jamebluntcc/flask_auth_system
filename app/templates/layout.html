@@ -18,7 +18,9 @@
 
   <!-- Mobile viewport optimized: h5bp.com/viewport -->
   <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+  {% assets "css_all" -%}
+    <link rel="stylesheet" href="{{ ASSET_URL }}">
+  {%- endassets %}
   <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <!--
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
@@ -59,8 +61,9 @@
 {% include "footer.html" %}
 
 <!-- JavaScript at the bottom for fast page loading -->
-<script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
-<script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+{% assets "js_all" -%}
+  <script src="{{ ASSET_URL }}"></script>
+{% endassets %}
 {% block js %}{% endblock %}
 <!-- end scripts -->
 {% endblock %}
