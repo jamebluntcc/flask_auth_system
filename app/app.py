@@ -1,11 +1,11 @@
 from flask import Flask, render_template
 from .exetensions import db, bcrypt, login_manager, migrate, mail
 from auth.models import User
-from auth.adminView import authModelView, myAdminIndexView
+from admin.admin_view import authModelView, myAdminIndexView
 from . import auth, main, user
 from settings import DevConfig
 from flask_admin import Admin
-
+import assets
 
 def create_app(config=DevConfig):
     app = Flask(__name__)
@@ -23,6 +23,7 @@ def register_exetensions(app):
     login_manager.init_app(app)
     migrate.init_app(app, db)
     mail.init_app(app)
+    assets.init_app(app)
     return None
 
 
