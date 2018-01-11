@@ -41,7 +41,8 @@ def confirm(token):
     if user:
         if user.active:
             flash('you have update your email infomation.', 'success')
-            return redirect(url_for('main.home'))
+            login_user(user)
+            return redirect(url_for('users.members'))
         if not user.active:
             user.update(active=True)
             flash('you have confirmed your account. Thanks!', 'success')
