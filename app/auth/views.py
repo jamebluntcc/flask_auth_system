@@ -36,13 +36,15 @@ def logout():
 
 
 @blueprint.route('/confirm/<token>')
-@login_required
 def confirm(token):
-    if current_user.active:
-        flash('you have update your email infomation.', 'success')
-        return redirect(url_for('main.home'))
-    if current_user.confirm(token):
-        flash('you have confirmed your account. Thanks!', 'success')
+    user = User.confirm(token)
+    if user:
+        if user.active:
+            flash('you have update your email infomation.', 'success')
+            return redirect(url_for('main.home'))
+        if not user.active:
+            user.update(active=True)
+            flash('you have confirmed your account. Thanks!', 'success')
     else:
         flash('the confirmation link is invalid or has expired.', 'danger')
     return redirect(url_for('main.home'))
