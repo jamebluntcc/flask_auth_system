@@ -47,3 +47,6 @@ python manager runserver
     - add flask admin on auth system.
  - beta 0.1.2 (15/12/2017)
     - add flask mail on auth system to verify user email and update user info page.
+ - beta 0.1.2 (11/01/2018)
+    - add flask assets and change token confirm.
+ 
