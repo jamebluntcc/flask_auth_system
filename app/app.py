@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from .exetensions import db, bcrypt, login_manager, migrate, mail
 from auth.models import User
-from admin.admin_view import authModelView, myAdminIndexView
+from admin.views import authModelView, myAdminIndexView
 from . import auth, main, user
 from settings import DevConfig
 from flask_admin import Admin
