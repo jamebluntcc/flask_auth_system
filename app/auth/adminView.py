@@ -1,3 +1,4 @@
+# coding:utf-8
 from flask import redirect, url_for
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import AdminIndexView, expose
