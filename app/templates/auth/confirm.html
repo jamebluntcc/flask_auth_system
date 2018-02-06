@@ -1,8 +1,8 @@
 <p>Dear {{ user.username }},</p>
-<p>Welcome to <b>flask</b>!</p>
-<p>To confirm your account please <a href="{{ url_for('auth.confirm', token=token, _external=True) }}">click here</a>.</p>
-<p>Alternatively, you can paste the following link in your browser's address bar:</p>
+<p>欢迎参加第九届植物基因组学大会 <b>四川农业大学协办</b>!</p>
+<p>为确认您的邮箱地址 <a href="{{ url_for('auth.confirm', token=token, _external=True) }}">点击这里</a>.</p>
+<p>同时, 您也可以通过点击下面的链接来进行验证:</p>
 <p>{{ url_for('auth.confirm', token=token, _external=True) }}</p>
-<p>Sincerely,</p>
+<p>真挚的,</p>
 <p>The Onmath Team</p>
 <p><small>Note: replies to this email address are not monitored.</small></p>

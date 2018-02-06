@@ -1,8 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
+<h3>您好, {{ current_user.username }} 欢迎参加第九届小麦基因组学大会</h3>
+<p>修改个人信息.</p>
     <div class="row">
         <div class="col-md-6">
-        <h1>Change Infomation</h1>
+        <h1>更改基本信息</h1>
     <br/>
     <form id="ChangeinfoForm" class="form form-register" method="POST" action="{{ url_for('users.change_info') }}" role="form">
         {{ info_form.hidden_tag() }}
@@ -18,7 +20,7 @@
     </form>
         </div>
         <div class="col-md-6">
-              <h1>Change Password</h1>
+            <h1>更改密码</h1>
         <br/>
         <form id="EditPasswordForm" class="form form-register" method="POST" action="{{ url_for('users.change_passwd') }}" role="form">
         {{ passwd_form.hidden_tag() }}
@@ -38,4 +40,42 @@
     </form>
         </div>
     </div>
+<hr><br/>
+<h3>更改摘要</h3>
+<div class="row">
+    <form id="SummaryForm" class="form-register form" method="post" action="{{ url_for('users.summary') }}" role="form">
+        {{ summary_form.hidden_tag() }}
+        <div class="form-group">
+            {{ summary_form.title.label }}
+            {{ summary_form.title(placeholder="", class_="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ summary_form.author.label }}
+            {{ summary_form.author(placeholder="", class_="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ summary_form.unit.label }}
+            {{ summary_form.unit(placeholder="", class_="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ summary_form.kwords.label }}
+            {{ summary_form.kwords(placeholder="", class_="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ summary_form.text.label }}
+            {{ summary_form.text(placeholder="", class_="form-control") }}
+        </div>
+         <p><input class="btn btn-default btn-submit" type="submit" value="submit"></p>
+    </form>
+</div>
+<hr><br/>
+<h3>更改支付方式</h3>
+<form id="PayOnlineForm" class="form-register form" method="POST" action="{{ url_for('users.pay_method') }}" role="form">
+    {{ pay_form.hidden_tag() }}
+    <div class="form-group">
+        {{pay_form.pay_online.label}}
+        {{pay_form.pay_online(value=current_user.is_online_pay)}}
+    </div>
+    <p><input class="btn btn-default btn-submit" type="submit" value="submit"></p>
+</form>
 {% endblock %}

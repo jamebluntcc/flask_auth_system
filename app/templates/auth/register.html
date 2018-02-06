@@ -1,28 +1,42 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="container-narrow">
-  <h1>Register</h1>
+  <h1>注册</h1>
     <br/>
-    <form id="registerForm" class="form form-register" method="POST" action="" role="form">
+    <form id="registerForm" class="form-horizontal form-register" method="POST" action="" role="form">
         {{ form.hidden_tag() }}
             <div class="form-group">
-                {{form.username.label}}
-                {{form.username(placeholder="Username", class_="form-control")}}
+                <span>
+                    {{form.username.label}}
+                    {{form.username(placeholder="", class_="form-control")}}
+                </span>
+            </div>
+            <div class="form-group">
+                {{form.realname.label}}
+                {{form.realname(placeholder="", class_="form-control")}}
+            </div>
+            <div class="form-group">
+                {{form.unit.label}}
+                {{form.unit(placeholder="", class_="form-control")}}
             </div>
             <div class="form-group">
                 {{form.email.label}}
-                {{form.email(placeholder="Email", class_="form-control")}}
+                {{form.email(placeholder="", class_="form-control")}}
+            </div>
+            <div class="form-group">
+                {{form.phone.label}}
+                {{form.phone(placeholder="", class_="form-control")}}
             </div>
             <div class="form-group">
                 {{form.password.label}}
-                {{form.password(placeholder="Password", class_="form-control")}}
+                {{form.password(placeholder="", class_="form-control")}}
             </div>
             <div class="form-group">
                 {{form.confirm.label}}
-                {{form.confirm(placeholder="Password (again)", class_="form-control")}}
+                {{form.confirm(placeholder="", class_="form-control")}}
             </div>
-            <p><input class="btn btn-default btn-submit" type="submit" value="Register"></p>
+            <p><input class="btn btn-default btn-submit" type="submit" value="注册"></p>
     </form>
-    <p><em>Already registered?</em> Click <a href="/">here</a> to login.</p>
+    <p><em>已经注册?</em> 点击 <a href="/">这里</a> 登录</p>
 </div>
 {% endblock %}
