@@ -18,6 +18,9 @@ class Config(object):
         '163.com': 'https://mail.163.com',
         'qq.com': 'https://mail.qq.com'
     }
+    ALLOWED_EXTENSIONS = ['doc', 'docx']
+    UPLOAD_FOLDER = os.path.join(PROJECT_ROOT, 'app', 'static', 'upload')
+    OUTPUT_FOLDER = os.path.join(PROJECT_ROOT, 'app', 'static', 'output')
 
 
 class DevConfig(Config):
