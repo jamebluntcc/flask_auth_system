@@ -3,13 +3,14 @@ from .exetensions import db, bcrypt, login_manager, migrate, mail
 from auth.models import User
 from admin.views import authModelView, myAdminIndexView
 from . import auth, main, user
-from settings import DevConfig
+from settings import config
 from flask_admin import Admin
 import assets
 
-def create_app(config=DevConfig):
+
+def create_app(configStr='dev'):
     app = Flask(__name__)
-    app.config.from_object(config)
+    app.config.from_object(config[configStr])
     register_blueprint(app)
     register_exetensions(app)
     register_errorhandlers(app)

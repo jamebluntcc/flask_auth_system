@@ -1,6 +1,57 @@
-
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Welcome {{ current_user.username }}</h1>
-    <h3>This is the members-only page.</h3>
+<div>
+<h3>您好, {{ current_user.username }} 欢迎参加第九届小麦基因组学大会</h3>
+<p>第九届小麦基因组学大学在四川农业大学召开.</p>
+</div>
+<hr>
+<div>
+<h3>我的基本信息</h3>
+<table class="table table-bordered table-condensed">
+    <thead>个人基本信息</thead>
+    <tbody>
+    <tr>
+        <td><b>姓名:</b></td>
+        <td>{{ current_user.realname }}</td>
+        <td><b>所属单位:</b></td>
+        <td>{{ current_user.unit }}</td>
+    </tr>
+    <tr>
+        <td><b>手机号码:</b></td>
+        <td>{{ current_user.phone }}</td>
+        <td><b>邮箱:</b></td>
+        <td>{{ current_user.email }}</td>
+    </tr>
+    </tbody>
+</table>
+</div>
+<hr><br/>
+<div>
+<h3>我的摘要</h3>
+{% if current_summary %}
+<h4>标题</h4>
+{{ current_summary.title }}
+<h4>作者</h4>
+{{ current_summary.author }}
+<h4>所在单位</h4>
+{{ current_summary.unit }}
+<h4>关键词</h4>
+{{ current_summary.kwords }}
+<h4>摘要</h4>
+{{ current_summary.text }}
+{% endif %}
+    <br/>
+    {% if current_user.filename %}
+        <p>查看已上传摘要详情<a href="{{ url_for('users.uploadfile', filename=current_user.filename ) }}">点击这里</a></p>
+    {% endif %}
+</div>
+<hr><br/>
+<div>
+    <h3>支付方式</h3>
+    {% if current_user.is_online_pay %}
+    <h4>hi, {{ current_user.username }} 您现在选择的支付方式是在线方式</h4>
+    {% else %}
+    <h4>hi, {{ current_user.username }} 您现在选择的支付方式是线下方式</h4>
+    {% endif %}
+</div>
 {% endblock %}

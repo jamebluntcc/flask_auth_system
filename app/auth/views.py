@@ -1,3 +1,8 @@
+# coding:utf-8
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 from flask import Blueprint, flash, redirect, render_template, url_for, request
 from .forms import RegisterForm
 from flask_login import login_required, logout_user, current_user, login_user
@@ -6,7 +11,15 @@ from app.utils import flash_errors
 from app.mail import send_mail
 from settings import Config
 
+
 blueprint = Blueprint('auth', __name__, url_prefix='/auth')
+
+'''
+@blueprint.before_app_first_request
+def get_admin():
+    if current_user.username == 'jamebluntcc':
+        current_user.update(is_admin=True)
+'''
 
 
 @blueprint.before_app_request
@@ -17,6 +30,7 @@ def before_request():
             and request.endpoint[:5] != 'auth.' \
             and request.endpoint != 'static':
         return redirect(url_for('auth.unconfirmed'))
+
 
 
 @blueprint.route('/unconfirmed/')
@@ -31,7 +45,7 @@ def unconfirmed():
 @login_required
 def logout():
     logout_user()
-    flash('You are logged out.', 'info')
+    flash(u'您已经登出.', 'info')
     return redirect(url_for('main.home'))
 
 
@@ -40,14 +54,14 @@ def confirm(token):
     user = User.confirm(token)
     if user:
         if user.active:
-            flash('you have update your email infomation.', 'success')
+            flash(u'您已经更新邮箱信息.', 'success')
             login_user(user)
             return redirect(url_for('users.members'))
         if not user.active:
             user.update(active=True)
-            flash('you have confirmed your account. Thanks!', 'success')
+            flash(u'您已经确认邮箱帐号.', 'success')
     else:
-        flash('the confirmation link is invalid or has expired.', 'danger')
+        flash(u'令牌已经失效,请重新发送邮件.', 'danger')
     return redirect(url_for('main.home'))
 
 
@@ -56,6 +70,9 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         user = User(username=form.username.data,
+                    realname=form.realname.data,
+                    unit=form.unit.data,
+                    phone=form.phone.data,
                     email=form.email.data,
                     password=form.password.data,
                     active=False)
@@ -63,8 +80,7 @@ def register():
         token = user.generate_confirmation_token()
         send_mail(user.email, 'Confirm Your Account',
                   'auth/confirm', user=user, token=token)
-        flash('Thank you for register. A confirmation email has been sent to you by email. \
-        note: open verify email better on your pc browser', 'success')
+        flash(u'感谢您的注册,一封确认邮件将会被发送到您的邮箱,请注意查收.', 'success')
         login_user(user)
         return redirect(url_for('main.home'))
     else:
@@ -78,5 +94,5 @@ def resend_confirmation():
     token = current_user.generate_confirmation_token()
     send_mail(current_user.email, 'Confirm Your Account',
               'auth/confirm', user=current_user, token=token)
-    flash('A new confirmation email has been sent to you by email.', 'success')
+    flash(u'一封新的确认邮件已经发送到您的邮箱.', 'success')
     return redirect(url_for('main.home'))

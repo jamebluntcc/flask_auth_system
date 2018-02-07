@@ -8,9 +8,9 @@
 <link rel="icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
 <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.ico') }}">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <title>{% block page_title %}
-      Login system
+      Wheat
     {% endblock %}
   </title>
   <meta name="description" content="{% block meta_description %}{% endblock %}">
@@ -45,7 +45,7 @@
         {% for category, message in messages %}
         <div class="alert alert-{{ category }}">
           <a class="close" title="Close" href="#" data-dismiss="alert">&times;</a>
-         {{message}}
+         {{ message.decode('utf-8') }}
         </div><!-- end .alert -->
         {% endfor %}
       </div><!-- end col-md -->

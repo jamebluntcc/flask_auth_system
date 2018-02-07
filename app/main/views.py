@@ -1,6 +1,11 @@
+# coding:utf-8
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from app.auth.forms import LoginForm
-from flask_login import login_user, login_required
+from flask_login import login_user
 from app.exetensions import login_manager
 from app.utils import flash_errors
 from app.auth.models import User
@@ -20,7 +25,7 @@ def home():
     if request.method == 'POST':
         if form.validate_on_submit():
             login_user(form.user)
-            flash('You are logged in.', 'success')
+            flash(u'您已经成功登录.', 'success')
             redirect_url = request.args.get('next') or url_for('users.members')
             return redirect(redirect_url)
         else:
