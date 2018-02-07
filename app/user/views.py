@@ -113,7 +113,9 @@ def change_info():
         if info_form.validate_on_submit():
             old_email = current_user.email
             current_user.update(username=info_form.username.data,
-                                email=info_form.email.data)
+                                email=info_form.email.data,
+                                phone=info_form.phone.data,
+                                unit=info_form.unit.data)
             if info_form.email.data != old_email:
                 token = current_user.generate_confirmation_token()
                 send_mail(info_form.email.data, 'Confirm Your Account',

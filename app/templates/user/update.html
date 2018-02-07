@@ -16,6 +16,14 @@
                 {{info_form.email.label}}
                 {{info_form.email(value=current_user.email, class_="form-control")}}
             </div>
+            <div class="form-group">
+                {{info_form.phone.label}}
+                {{info_form.phone(value=current_user.phone, class_="form-control")}}
+            </div>
+            <div class="form-group">
+                {{info_form.unit.label}}
+                {{info_form.unit(value=current_user.unit, class_="form-control")}}
+            </div>
         <p><input class="btn btn-default btn-submit" type="submit" value="submit"></p>
     </form>
         </div>

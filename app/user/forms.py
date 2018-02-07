@@ -5,7 +5,7 @@ sys.setdefaultencoding('utf-8')
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, TextAreaField, SelectMultipleField, widgets
-from wtforms.validators import DataRequired, Email, EqualTo, Length
+from wtforms.validators import DataRequired, Email, EqualTo, Length, Regexp
 from app.auth.models import User
 from flask_login import current_user
 
@@ -38,6 +38,10 @@ class ChangeinfoForm(FlaskForm):
                            validators=[DataRequired(), Length(min=1, max=30)])
     email = StringField(u'邮箱',
                         validators=[DataRequired(), Email()])
+    unit = StringField(u'所在单位',
+                       validators=[DataRequired()])
+    phone = StringField(u'手机号码',
+                        validators=[DataRequired(), Regexp("1[34578][0-9]{9}", message=u'手机号码格式不正确')])
 
     def __init__(self, *args, **kwargs):
         super(ChangeinfoForm, self).__init__(*args, **kwargs)
@@ -56,6 +60,11 @@ class ChangeinfoForm(FlaskForm):
             self.user = User.query.filter_by(email=self.email.data).first()
             if self.user:
                 self.email.errors.append(u'邮箱已经被注册')
+                return False
+        if self.phone.data != current_user.phone:
+            self.user = User.query.filter_by(phone=self.phone.data).first()
+            if self.user:
+                self.phone.errors.append(u'电话已经注册')
                 return False
         return True
 
