@@ -1,13 +1,16 @@
 # coding:utf-8
+import os
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
-from flask import render_template, Blueprint, request, flash, redirect, url_for
+from flask import render_template, Blueprint, request, flash, redirect, url_for, send_from_directory
 from flask_login import login_required, current_user
 from .forms import ChangeinfoForm, EditPasswordForm, SummaryForm, PayForm
 from app.mail import send_mail
-from app.utils import flash_errors
+from app.utils import flash_errors, allowed_file
 from app.auth.models import Summary
+from werkzeug.utils import secure_filename
+from settings import Config
 
 blueprint = Blueprint('users', __name__, url_prefix='/users')
 
@@ -125,6 +128,47 @@ def change_info():
                            passwd_form=passwd_form,
                            summary_form=summary_form,
                            pay_form=pay_form)
+
+
+@blueprint.route('/upload/', methods=['GET', 'POST'])
+@login_required
+def upload_summary():
+    info_form = ChangeinfoForm()
+    passwd_form = EditPasswordForm()
+    summary_form = SummaryForm()
+    pay_form = PayForm()
+    if request.method == 'POST':
+        if 'summary' not in request.files or request.files['summary'].filename == '':
+            flash(u'当前没有选取到您上传的摘要', 'danger')
+            return redirect(url_for('users.update'))
+        file = request.files['summary']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            saveFilename = '_'.join([current_user.username, filename])
+            current_user.update(filename=saveFilename)
+            file.save(os.path.join(Config.UPLOAD_FOLDER, saveFilename))
+            flash(u'摘要上传成功', 'success')
+            redirect(url_for('users.members'))
+        else:
+            flash(u'上传文件格式不正确', 'danger')
+            redirect(url_for('users.update'))
+    return render_template('user/update.html',
+                           info_form=info_form,
+                           passwd_form=passwd_form,
+                           summary_form=summary_form,
+                           pay_form=pay_form)
+
+
+@blueprint.route('/upload/<filename>')
+@login_required
+def uploadfile(filename):
+    return send_from_directory(Config.UPLOAD_FOLDER, filename)
+
+
+
+
+
+
 
 
 
