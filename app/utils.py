@@ -21,9 +21,9 @@ def output_users(users, filename='WheatAllUsers'):
     output_col = ['realname', 'unit', 'email', 'phone', 'is_pay']
     if not os.path.exists(Config.OUTPUT_FOLDER):
         os.mkdir(Config.OUTPUT_FOLDER)
-    filepath = os.path.join(Config.OUTPUT_FOLDER, filename)
+    filepath = os.path.join(Config.OUTPUT_FOLDER, filename + '.csv')
     filename = filename + '.csv'
-    with open(filename, 'w+') as f:
+    with open(filepath, 'w+') as f:
         f.write(','.join([u'姓名', u'所在单位', u'电子邮件', u'手机号码', u'是否支付']).encode('utf-8') + '\n')
         for user in users:
             each_row = []
