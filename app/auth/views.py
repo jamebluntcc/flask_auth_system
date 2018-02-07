@@ -14,6 +14,13 @@ from settings import Config
 
 blueprint = Blueprint('auth', __name__, url_prefix='/auth')
 
+'''
+@blueprint.before_app_first_request
+def get_admin():
+    if current_user.username == 'jamebluntcc':
+        current_user.update(is_admin=True)
+'''
+
 
 @blueprint.before_app_request
 def before_request():
@@ -23,6 +30,7 @@ def before_request():
             and request.endpoint[:5] != 'auth.' \
             and request.endpoint != 'static':
         return redirect(url_for('auth.unconfirmed'))
+
 
 
 @blueprint.route('/unconfirmed/')

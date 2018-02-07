@@ -36,16 +36,20 @@ class User(UserMixin, CRUDMixin, db.Model):
     create_at = db.Column(db.DateTime, nullable=False)
     active = db.Column(db.Boolean(), default=False)
     is_admin = db.Column(db.Boolean(), default=False)
+    is_pay = db.Column(db.Boolean(), default=False)
     is_online_pay = db.Column(db.Boolean(), default=False)
     summary_id = db.Column(db.Integer, db.ForeignKey('summary.id'))
+    filename = db.Column(db.String(80), nullable=True)
 
-    def __init__(self, username, realname, unit, email, phone, active, password=None, is_admin=False, summary_id=None, is_online_pay=False):
+    def __init__(self, username, realname, unit, email, phone, active, is_pay=False, filename=None, password=None, is_admin=False, summary_id=None, is_online_pay=False):
         self.username = username
         self.realname = realname
         self.unit = unit
         self.phone = phone
         self.email = email
         self.active = active
+        self.is_pay = is_pay
+        self.filename = filename
         self.is_admin = is_admin
         self.is_online_pay = is_online_pay
         self.summary_id = summary_id
