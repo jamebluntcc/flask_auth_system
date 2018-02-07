@@ -7,24 +7,20 @@
 <hr>
 <div>
 <h3>我的基本信息</h3>
-<table>
+<table class="table table-bordered table-condensed">
     <thead>个人基本信息</thead>
     <tbody>
     <tr>
-        <td>姓名</td>
+        <td><b>姓名:</b></td>
         <td>{{ current_user.realname }}</td>
-        <td>性别</td>
-        <td>{{ current_user.sex }}</td>
-        <td>所属单位</td>
+        <td><b>所属单位:</b></td>
         <td>{{ current_user.unit }}</td>
     </tr>
     <tr>
-        <td>手机号码</td>
+        <td><b>手机号码:</b></td>
         <td>{{ current_user.phone }}</td>
-        <td>邮箱</td>
+        <td><b>邮箱:</b></td>
         <td>{{ current_user.email }}</td>
-        <td>通讯地址</td>
-        <td>{{ current_user.address }}</td>
     </tr>
     </tbody>
 </table>
@@ -44,6 +40,10 @@
 <h4>摘要</h4>
 {{ current_summary.text }}
 {% endif %}
+    <br/>
+    {% if current_user.filename %}
+        <p>查看已上传摘要详情<a href="{{ url_for('users.uploadfile', filename=current_user.filename ) }}">点击这里</a></p>
+    {% endif %}
 </div>
 <hr><br/>
 <div>
